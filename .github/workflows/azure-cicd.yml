@@ -20,9 +20,12 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
-      - name: Build Docker image
-        # FIX: Added quotes around the tag and ensured the '.' (context) is clearly separated
-        run: docker build -t "devopsdemo.azurecr.io/flaskapp:${{ github.sha }}" .
+      - name: Build Docker image with both latest and SHA tags
+        run: |
+          docker build -t devopsdemo.azurecr.io/flaskapp:latest \
+                       -t devopsdemo.azurecr.io/flaskapp:${{ github.sha }} .
 
-      - name: Push Docker image
-        run: docker push "devopsdemo.azurecr.io/flaskapp:${{ github.sha }}"
+      - name: Push both Docker tags
+        run: |
+          docker push devopsdemo.azurecr.io/flaskapp:latest
+          docker push devopsdemo.azurecr.io/flaskapp:${{ github.sha }}
