@@ -21,7 +21,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build . -t ${{ secrets.ACR_LOGIN_SERVER }}/flaskapp:${{ github.sha }}
+        docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/flaskapp:${{ github.sha }} .
 
     - name: Push Docker image
       run: |
